@@ -51,3 +51,33 @@
 
 */
 
+var correctAnswers = 0;
+var incorrectAnswers = 0;
+var unanswered = 0;
+
+$(".start-button").on("click", startGame);  // Clicking START button triggers startGame function
+
+function startGame() {
+  // hides or replaces start button and displays timer, question, answer buttons
+  $(".start-button").hide();
+  $(".game-contents").show();
+  // 
+
+}
+
+// Make array with questions, use for loop to select a question in the array.
+
+var questions = ["1+1", "2*2", "Answer of this question is Javascript"];
+var questionOneAnswers = ["3", "0", "1", "2"] // How can I assign this to button 1234?
+
+
+if (choice === correct) {
+  // show correct 
+} else {
+  // show incorrect
+}
+
+if (timer = 0) {
+  // show time's up
+}
+
