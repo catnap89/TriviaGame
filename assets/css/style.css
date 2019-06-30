@@ -31,3 +31,9 @@ body {
 .start-button {
   /* margin-top: 200px; */
 }
+
+.game-contents {
+  text-align: center;
+  border: 1px solid teal;
+  display: none;
+}
