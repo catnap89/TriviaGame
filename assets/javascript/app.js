@@ -2,16 +2,16 @@
 /*
 
 # When website is loaded
-  * Only the Title and Start button is shown
+  * Only the Title and Start button is shown -- Check
 
 # When Buttons are hovered (Don't forget to do this!)
   * use :hover (in css)
 
 # When the Start button is clicked
   * Hide or Replace Start button with 
-    * Time Remaining: -- Seconds
+    * Time Remaining: -- Seconds  -- Check
     * Trivia Question
-    * 4 answer buttons
+    * 4 answer buttons  --- Check
 
 # When one of the answer buttons are clicked
   * If the answer is incorrect
@@ -66,11 +66,13 @@ $(".start-button").on("click", startGame);  // Clicking START button triggers st
 
 // For when the start button is clicked.
 function startGame() {
-  // hides or replaces start button and displays timer, question, answer buttons
+ 
   $(".start-button").hide();
   $(".game-contents").show();
-  // Display Timer
+  
   startTimer();
+
+  // Display Question
 
 }
 
@@ -98,21 +100,40 @@ function stop() {
   clearInterval(intervalId);
 }
 
+// for questions
 
+var questions = [
+  {
+    question: "What is 1+1?",
+    answers: {
+      a: "3",
+      b: "0",
+      c: "1",
+      d: "2"
+    },
+    correct: "d"
+  }
+];
 
-// Make array with questions, use for loop to select a question in the array.
+function showQuestions() {
 
-var questions = ["1+1", "2*2", "Answer of this question is Javascript"];
-var questionOneAnswers = ["3", "0", "1", "2"] // How can I assign this to button 1234?
-
-
-if (choice === correct) {
-  // show correct 
-} else {
-  // show incorrect
 }
 
-if (timer = 0) {
-  // show time's up
+function showResults() {
+  // show the result for 5 seconds when button is clicked or timer is over.
+  if (choice === correct) {
+    // show correct 
+  } else {
+    // show incorrect
+  }
+
+  if (timer = 0) {
+    // show time's up
+  }
+
 }
+
+
+
+
 
