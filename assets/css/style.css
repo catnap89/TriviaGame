@@ -1,0 +1,33 @@
+
+body {
+  background-color: yellow;
+}
+
+.container {
+  background-color: grey;
+  height: 80vh;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.row {
+  border: 1px solid red;
+}
+
+.col-md-12 {
+  border: 1px solid blue;
+
+}
+
+.title {
+  border: 1px solid green;
+  text-align: center;
+}
+
+.button-container {
+  height: 100%;
+  background-color: white;
+}
+.start-button {
+  /* margin-top: 200px; */
+}
