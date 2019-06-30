@@ -37,3 +37,7 @@ body {
   border: 1px solid teal;
   display: none;
 }
+
+.timer {
+  color: teal;
+}

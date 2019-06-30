@@ -54,16 +54,51 @@
 var correctAnswers = 0;
 var incorrectAnswers = 0;
 var unanswered = 0;
+var intervalId;
+var timer = 20;
+
 
 $(".start-button").on("click", startGame);  // Clicking START button triggers startGame function
 
+
+// Functions
+// =============================================================================
+
+// For when the start button is clicked.
 function startGame() {
   // hides or replaces start button and displays timer, question, answer buttons
   $(".start-button").hide();
   $(".game-contents").show();
-  // 
+  // Display Timer
+  startTimer();
 
 }
+
+// For Timer
+function startTimer() {
+  clearInterval(intervalId);
+  intervalId = setInterval(decrement, 1000);
+} 
+
+function decrement() {
+
+  timer--;
+
+  $(".timer").html("<h3 class='timer'>" + "Time Remaining: " + timer + " Seconds" + "</h3>");
+
+  if (timer === 0) {
+
+    stop();
+
+    // display times up
+  }
+}
+
+function stop() {
+  clearInterval(intervalId);
+}
+
+
 
 // Make array with questions, use for loop to select a question in the array.
 
