@@ -73,6 +73,7 @@ function startGame() {
   startTimer();
 
   // Display Question
+  showQuestions();  // this is first question when the start button is clicked, how do we move to result and to second question?
 
 }
 
@@ -102,20 +103,50 @@ function stop() {
 
 // for questions
 
-var questions = [
-  {
-    question: "What is 1+1?",
-    answers: {
-      a: "3",
-      b: "0",
-      c: "1",
-      d: "2"
-    },
-    correct: "d"
-  }
-];
+// question: answer
+// assign button with a,b,c,d
+// if question: answer === button value, then proceed to correct answer 
+
+// var myQuestions = [
+//   {
+//     question: "What is 1+1?",
+//     answers: {
+//       a: "3",
+//       b: "0",
+//       c: "1",
+//       d: "2"
+//     },
+//     correct: "d"
+//   },
+//   {
+//     questiontwo: "What is 2 x 2?",
+//     answers: {
+//       a: "22",
+//       b: "2",
+//       c: "4",
+//       d: "0"
+//     },
+//     correct: "c"
+//   },
+// ];
+  
+
+var questions = {};
+questions['firstquestion'] = '1+1 = ?';
+questions['secondquestion'] = '2 x 2 = ?';
+
+var correct = {};
+correct[questions.firstquestion] = "answer-a"
+
+var choice = $(".answerBtn").value  // user input (click on the button)
+
+
 
 function showQuestions() {
+
+  $(".question").text(questions.firstquestion);
+
+  
 
 }
 
@@ -123,8 +154,10 @@ function showResults() {
   // show the result for 5 seconds when button is clicked or timer is over.
   if (choice === correct) {
     // show correct 
+    $(".question").text("Correct!");
   } else {
     // show incorrect
+    $(".question").text("Incorrect!");
   }
 
   if (timer = 0) {
@@ -133,6 +166,10 @@ function showResults() {
 
 }
 
+$(".answerBtn").on("click", showResults);  // button click does display incorrect but not a correct message. also breaks timer
+
+
+// not only the timer to show the users, the set interval can be used so that for the answer display page can only last certain sec?
 
 
 
