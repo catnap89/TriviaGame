@@ -59,6 +59,7 @@ var timer = 20;
 
 
 $(".start-button").on("click", startGame);  // Clicking START button triggers startGame function
+$(".answerBtn").on("click", showResults);  // button click does display incorrect but not a correct message. also breaks timer
 
 
 // Functions
@@ -91,13 +92,14 @@ function decrement() {
 
   if (timer === 0) {
 
-    stop();
+    stopTimer();
 
     // display times up
+    timeup();
   }
 }
 
-function stop() {
+function stopTimer() {
   clearInterval(intervalId);
 }
 
@@ -136,9 +138,13 @@ questions['firstquestion'] = '1+1 = ?';
 questions['secondquestion'] = '2 x 2 = ?';
 
 var correct = {};
-correct[questions.firstquestion] = "answer-a"
+correct[questions.firstquestion] = "a"
+correct[questions.secondquestion] = "b"
 
-var choice = $(".answerBtn").value  // user input (click on the button)
+var choice = $(".answerBtn").click(function(event) {
+    choice = event.target.id;
+    
+  });  // id of each button when clicked 
 
 
 
@@ -150,23 +156,35 @@ function showQuestions() {
 
 }
 
+
 function showResults() {
   // show the result for 5 seconds when button is clicked or timer is over.
-  if (choice === correct) {
-    // show correct 
-    $(".question").text("Correct!");
-  } else {
-    // show incorrect
-    $(".question").text("Incorrect!");
-  }
+  // Get id of element clicked by user
+  $(".answerBtn").click(function(event) {
+    choice = event.target.id;
 
-  if (timer = 0) {
-    // show time's up
-  }
+    // Compare id to target id
+    if (choice === correct) {
+      $(".results").text("Correct!");
+      stopTimer();
+    }
+    else {
+      $(".results").text("Incorrect!");
+      stopTimer();
+    }
+    
+  });
+
 
 }
 
-$(".answerBtn").on("click", showResults);  // button click does display incorrect but not a correct message. also breaks timer
+function timeup() {
+  if (timer === 0) {
+    $(".results").text("Time's Up!")
+  }
+}
+
+
 
 
 // not only the timer to show the users, the set interval can be used so that for the answer display page can only last certain sec?
