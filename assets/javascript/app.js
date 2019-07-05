@@ -51,10 +51,15 @@
 
 */
 
+// the game did not work without document ready method for event listeners --- test if it works without document.ready method if the event listeners are located at the bottom.
+$(document).ready(function() {
 
-// event listeners
-$(".start-button").on("click", startGame);  // Clicking START button triggers startGame function
-$(document).on('click' , '.answerBtn', guessChecker);
+  // event listeners
+  $(".start-button").on("click", startGame);  // Clicking START button triggers startGame function
+  $(".restart-button").on("click", startGame);
+  $(document).on('click' , '.answerBtn', guessChecker);
+
+})
 
 var trivia = {
   // trivia properties
@@ -62,9 +67,9 @@ var trivia = {
   incorrect: 0,
   unanswered: 0,
   currentSet: 0,
-  timer: 20,
-  timerId: "",
-  timerOn: true,
+  timer: 10,
+  timerId: '',
+  timerOn: false,
 
   // questions, answer options, and correct answers
   questions: {
@@ -89,16 +94,16 @@ var trivia = {
     q3: "The Burning Crusade",
     q4: "2.8 million",
 
-  }
+  },
 
 }
 
 // function to initialize game
 function startGame() {
-  // trivia.correct = 0;
-  // trivia.incorrect = 0;
-  // trivia.unanswered = 0;
-  // trivia.currentSet = 0;
+  trivia.correct = 0;
+  trivia.incorrect = 0;
+  trivia.unanswered = 0;
+  trivia.currentSet = 0;
 
   // Don't think I need to have timer here, since nextQuestion will display timer. -- WRONG. Whenever user click start button to restart the game after first game, the counter speeds up without clearInterval.
   clearInterval(trivia.timerId);
@@ -107,8 +112,9 @@ function startGame() {
 
   // hide start button and show game-contents
   $(".start-button").hide();
+  $(".restart-button").hide();
   $(".game-contents").show();
-  // empty last result
+  // empty last result (the final score)
   $(".results").text("");
 
   // ask first question
@@ -119,29 +125,29 @@ function startGame() {
 function nextQuestion() {
 
   // set timer to 20 sec
-  trivia.timer = 20;
+  trivia.timer = 10;
   // this method below quickly reset the timer back to 20 and show it. Without it, if previous question was answered at 15 sec, user will see 15 sec in timer briefly before it resets back to 20 sec.
   $(".timer").text("Time Remaining: " + trivia.timer + " Seconds")
 
   // to prevent timer from speeding up
   // run timerStart
-  if (trivia.timerOn === true) {
+  if (trivia.timerOn === false) {
     trivia.timerId = setInterval(timerStart, 1000)
   }
 
   // gets all the questions then indexes current question
-  var questionLists = Object.value(trivia.questions)[trivia.currentSet];
+  var questionLists = Object.values(trivia.questions)[trivia.currentSet];
   $(".question").text(questionLists);
   console.log(questionLists);
 
   // an array of all the user options for the current question
-  var answerOptions = Object.value(trivia.options)[trivia.currentSet];
+  var answerOptions = Object.values(trivia.options)[trivia.currentSet];
   console.log(answerOptions);
 
   // creates all the trivia guess options in the html (appending it to button-group)
   $.each(answerOptions, function(index, key) {
 
-    $(".button-group").append($('<button type="button" class ="btn btn-outline-success">'+ key +'</button>'))
+    $(".button-group").append($('<button type="button" class ="btn btn-outline-success answerBtn">'+ key +'</button>'))
 
   })
 
@@ -151,7 +157,51 @@ function nextQuestion() {
 function timerStart() {
   
   // if timer still has time left and if there are still questions left to ask
-  if (trivia.timer > -1 && )
+  // trivia.currentSet start from 0 so on the last question currentSet will be 1 less than Object.keys(trivia.questions).length.
+  if (trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length) {
+    $(".timer").text("Time Remaining: " + trivia.timer + " Seconds")
+    trivia.timer--;
+  }
+
+  // if timer reaches 0, 
+  else if (trivia.timer === -1) {
+    // increment unanswered counter
+    trivia.unanswered++;
+    // stop question timer
+    clearInterval(trivia.timerId);
+    //run showResult for 5 sec to hide buttons
+    resultId = setTimeout(showResult, 1000);
+
+    $(".button-group").remove();
+    $(".results").text("Time's Up!");
+    $(".question").append('<p class="answer">' + 'The Answer Was: ' + Object.values(trivia.answers)[trivia.currentSet] + '</p>');
+    $(".gif").append('<img src="../images/wrong_trump.gif" class="result_gif">')
+
+  }
+
+  // if there are no more questions left to ask
+  else if (trivia.currentSet === Object.keys(trivia.questions).length) {
+    // show the final result score
+    $(".results")
+      .text("<h3>All done, here's how you did!</h3>" + 
+      '<p>Total correct answers: ' + trivia.correct + '</p>' +
+      '<p>Total inccorect answers: ' + trivia.incorrect + '</p>' + '<p>Total unasnwered questions: ' + trivia.unanswered + '</p>');
+
+    // hide previous game info and show restart button
+    $(".question").hide();
+    $(".gif").hide();
+    $(".button-group").hide();
+    $(".restart-button").show();
+  }
+}
+
+function showResult() {
+
+  // increase currentSet
+  // remove previous question
+  // remove previous answeroption
+  // run nextQuestion
+
 }
 
 
