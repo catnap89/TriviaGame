@@ -52,13 +52,9 @@
 */
 
 
-
+// event listeners
 $(".start-button").on("click", startGame);  // Clicking START button triggers startGame function
 $(document).on('click' , '.answerBtn', guessChecker);
-
-
-// Functions
-// =============================================================================
 
 var trivia = {
   // trivia properties
@@ -95,6 +91,32 @@ var trivia = {
 
   }
 
+}
+
+// function to initialize game
+function startGame() {
+  trivia.correct = 0;
+  trivia.incorrect = 0;
+  trivia.unanswered = 0;
+  trivia.currentSet = 0;
+
+  clearInterval(trivia.timerId);
+  // show timer
+  $(".timer").text("Time Remaining: " + trivia.timer + " Seconds")
+
+  // hide start button and show game-contents
+  $(".start-button").hide();
+  $(".game-contents").show();
+  // empty last result
+  $(".results").text("");
+
+  // ask first question
+  nextQuestion();
+
+}
+
+function nextQuesiton() {
+  
 }
 
 
