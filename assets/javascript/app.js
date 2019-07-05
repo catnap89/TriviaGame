@@ -51,143 +51,239 @@
 
 */
 
-var correctAnswers = 0;
-var incorrectAnswers = 0;
-var unanswered = 0;
-var intervalId;
-var timer = 20;
 
 
 $(".start-button").on("click", startGame);  // Clicking START button triggers startGame function
-$(".answerBtn").on("click", showResults);  // button click does display incorrect but not a correct message. also breaks timer
+$(document).on('click' , '.answerBtn', guessChecker);
 
 
 // Functions
 // =============================================================================
 
-// For when the start button is clicked.
-function startGame() {
- 
-  $(".start-button").hide();
-  $(".game-contents").show();
-  
-  startTimer();
+var trivia = {
+  // trivia properties
+  correct: 0,
+  incorrect: 0,
+  unanswered: 0,
+  currentSet: 0,
+  timer: 20,
+  timerId: "",
+  timerOn: false,
 
-  // Display Question
-  showQuestions();  // this is first question when the start button is clicked, how do we move to result and to second question?
+  // questions, answer options, and correct answers
+  questions: {
+    q1: "Which company publishes 'World of Warcraft'?",
+    q2: "What year was 'World of Warcraft' released?",
+    q3: "What was the first expansion added to 'World of Warcraft'?",
+    q4: "How many copies of the 'Wrath of the Lich King' expansion sold on the first day?",
 
-}
+  },
 
-// For Timer
-function startTimer() {
-  clearInterval(intervalId);
-  intervalId = setInterval(decrement, 1000);
-} 
+  options: {
+    q1: ["Rockstar Games", "Blizzard Entertainment", "Riot Games", "Steam"],
+    q2: ["2004", "2001", "1999", "2007"],
+    q3: ["Cataclysm", "The Burning Crusade", "Wrath of the Lich King", "Mist of Pandaria"],
+    q4: ["10,000", "523,000", "2.8 million", "1.3 million"],
+    
+  },
 
-function decrement() {
+  answers: {
+    q1: "Blizzard Entertainment",
+    q2: "2004",
+    q3: "The Burning Crusade",
+    q4: "2.8 million",
 
-  timer--;
-
-  $(".timer").html("<h3 class='timer'>" + "Time Remaining: " + timer + " Seconds" + "</h3>");
-
-  if (timer === 0) {
-
-    stopTimer();
-
-    // display times up
-    timeup();
   }
+
 }
 
-function stopTimer() {
-  clearInterval(intervalId);
-}
 
-// for questions
 
-// question: answer
-// assign button with a,b,c,d
-// if question: answer === button value, then proceed to correct answer 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// For when the start button is clicked.
+// function startGame() {
+  
+//   // Reset counters
+//   correctCounter = 0;
+//   incorrectCounter = 0;
+//   unansweredCounter = 0;
+ 
+//   // Hide start button and show game-contents
+//   $(".start-button").hide();
+//   $(".game-contents").show();
+  
+//   startTimer();
+
+//   // Display Question
+//   nextQuestion(); // this is first question when the start button is clicked, how do we move to result and to second question?
+  
+// }
+
+// // For Timer
+// function startTimer() {
+
+//   clearInterval(intervalId);
+//   intervalId = setInterval(decrement, 1000);
+// } 
+
+// function decrement() {
+
+//   timer--;
+
+//   $(".timer").html("<h3 class='timer'>" + "Time Remaining: " + timer + " Seconds" + "</h3>");
+
+//   if (timer === 0) {
+
+//     stopTimer();
+
+//     // display times up
+//     timeup();
+//   }
+// }
+
+// function stopTimer() {
+//   clearInterval(intervalId);
+// }
+
+// // for questions
+// var answerBtn = $(".answerBtn");
 
 // var myQuestions = [
+  
 //   {
 //     question: "What is 1+1?",
-//     answers: {
-//       a: "3",
-//       b: "0",
-//       c: "1",
-//       d: "2"
-//     },
-//     correct: "d"
+//     answers: ["3", "0", "1", "2"],    
+//     correct: function() {
+//       return this.answers[3]
+//     }
 //   },
 //   {
-//     questiontwo: "What is 2 x 2?",
-//     answers: {
-//       a: "22",
-//       b: "2",
-//       c: "4",
-//       d: "0"
-//     },
-//     correct: "c"
+//     question: "What is 2 x 2?",
+//     answers: ["4", "2", "22", "0"],
+//     correct: function() {
+//       return this.answers[0]
+//     }
 //   },
+//   {
+//     question: "Hyper Text Markup Language is also known as___",
+//     answers: ["CSS", "JavaScript", "HTML", "jQuery"],
+//     correct: function() {
+//       return this.answers[2]
+//     }
+//   },
+//   {
+//     question: "What is Walmart's highest selling product of all time?",
+//     answers: ["Bottled Water", "Coke", "Toilet Paper", "Bananas"],
+//     correct: function() {
+//       return this.answers[3]
+//     }
+//   },
+
 // ];
+//   var questionOption = Object.value(myQuestions.question)[0];
+//   $('#question').text(questionOption);
+//   console.log(questionOption);
+
+
+// console.log(myQuestions[0])
+// console.log(myQuestions[0].question) // What is 1+1?
+// console.log(myQuestions[0].correct())
+// console.log(myQuestions[1].correct())
+
+/*
+1. loop through the my Questions obj.
+2. push the questions to questionArry.
+3. Display questions in order when the start button is clicked and after result 
+4. Display answers of the question inside answerbuttons
+5. When the answerBtns are clicked, show result for 5 seconds
+  1. if answerBtn clicked === correctAnswer, show correct messege.
+  2. if answerBtn clicked !=== correctAnswer, show incorrect message.
+  3. if timeout, show timeout message
+6. After 5 seconds of the result, show next question and the answers of the question
+
+*/
+
+// var correctAnswer = [myQuestions[0].correct(), myQuestions[1].correct(), myQuestions[2].correct(), myQuestions[3].correct()]  
+
+
+// If this is added to startGame function, which is triggered when start button is clicked, it should display next(first) question.
+// If this is added after result function then it should display next question after result.
+// Have result with timer and when timer === 0, trigger nextQuestion.
+// Result fucntion triggered when user click answerBtn.
+
+
+
+// var questionArry = [];
+
+//   for (var i = 0; i < myQuestions.length; i++) {
+//     questionArry.push(myQuestions[i].question);
+//   }
+
+
+
+  
+  
+//   console.log(questionArry);
+  
+// function questionLists() {
   
 
-var questions = {};
-questions['firstquestion'] = '1+1 = ?';
-questions['secondquestion'] = '2 x 2 = ?';
+//   // if($(".start-button").on("click", ))
+// }
 
-var correct = {};
-correct[questions.firstquestion] = "a"
-correct[questions.secondquestion] = "b"
 
-var choice = $(".answerBtn").click(function(event) {
-    choice = event.target.id;
-    
-  });  // id of each button when clicked 
+// function nextQuestion() {
+//   $(".question").text(questionArry[i].question);
+// }
 
 
 
-function showQuestions() {
+// $("#a").text(myQuestions[0].answers[0])  // myquestion[0] -> myQuestion[1] after result page.. HOW??
+// $("#b").text(myQuestions[0].answers[1])
+// $("#c").text(myQuestions[0].answers[2])
+// $("#d").text(myQuestions[0].answers[3])
 
-  $(".question").text(questions.firstquestion);
+// // alert($('.answerBtn').on("click", text()))
 
-  
-
-}
-
-
-function showResults() {
-  // show the result for 5 seconds when button is clicked or timer is over.
-  // Get id of element clicked by user
-  $(".answerBtn").click(function(event) {
-    choice = event.target.id;
-
-    // Compare id to target id
-    if (choice === correct) {
-      $(".results").text("Correct!");
-      stopTimer();
-    }
-    else {
-      $(".results").text("Incorrect!");
-      stopTimer();
-    }
-    
-  });
+// var results = $(".results")
+// var showResults;
 
 
-}
+// // Use timer to show this until timer === 0 , set the timer for 5 sec
+// showResults = function() {
 
-function timeup() {
-  if (timer === 0) {
-    $(".results").text("Time's Up!")
-  }
-}
+//   // if correct, display correct message and gif
+//   if (buttonClicked === myQuestions[i].correct)
+//   results.text("Correct")
+//   results.text("Correct Answer Was: " + questions.answer)
+//   // else incorrect, display incorrect message and gif
+//   // After 5 seconds, display nextQuestion
+// }
 
 
-
-
-// not only the timer to show the users, the set interval can be used so that for the answer display page can only last certain sec?
 
 
 
