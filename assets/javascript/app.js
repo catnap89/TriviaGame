@@ -64,7 +64,7 @@ var trivia = {
   currentSet: 0,
   timer: 20,
   timerId: "",
-  timerOn: false,
+  timerOn: true,
 
   // questions, answer options, and correct answers
   questions: {
@@ -95,11 +95,12 @@ var trivia = {
 
 // function to initialize game
 function startGame() {
-  trivia.correct = 0;
-  trivia.incorrect = 0;
-  trivia.unanswered = 0;
-  trivia.currentSet = 0;
+  // trivia.correct = 0;
+  // trivia.incorrect = 0;
+  // trivia.unanswered = 0;
+  // trivia.currentSet = 0;
 
+  // Don't think I need to have timer here, since nextQuestion will display timer. -- WRONG. Whenever user click start button to restart the game after first game, the counter speeds up without clearInterval.
   clearInterval(trivia.timerId);
   // show timer
   $(".timer").text("Time Remaining: " + trivia.timer + " Seconds")
@@ -115,8 +116,42 @@ function startGame() {
 
 }
 
-function nextQuesiton() {
+function nextQuestion() {
+
+  // set timer to 20 sec
+  trivia.timer = 20;
+  // this method below quickly reset the timer back to 20 and show it. Without it, if previous question was answered at 15 sec, user will see 15 sec in timer briefly before it resets back to 20 sec.
+  $(".timer").text("Time Remaining: " + trivia.timer + " Seconds")
+
+  // to prevent timer from speeding up
+  // run timerStart
+  if (trivia.timerOn === true) {
+    trivia.timerId = setInterval(timerStart, 1000)
+  }
+
+  // gets all the questions then indexes current question
+  var questionLists = Object.value(trivia.questions)[trivia.currentSet];
+  $(".question").text(questionLists);
+  console.log(questionLists);
+
+  // an array of all the user options for the current question
+  var answerOptions = Object.value(trivia.options)[trivia.currentSet];
+  console.log(answerOptions);
+
+  // creates all the trivia guess options in the html (appending it to button-group)
+  $.each(answerOptions, function(index, key) {
+
+    $(".button-group").append($('<button type="button" class ="btn btn-outline-success">'+ key +'</button>'))
+
+  })
+
+}
+
+// function to decrement timer and increment unanswered when timer runs out
+function timerStart() {
   
+  // if timer still has time left and if there are still questions left to ask
+  if (trivia.timer > -1 && )
 }
 
 
