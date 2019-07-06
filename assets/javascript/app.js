@@ -15,18 +15,18 @@
 
 # When one of the answer buttons are clicked
   * If the answer is incorrect
-    * Time Remaining is still displayed but the timer stops.
+    * Time Remaining is still displayed but the timer stops. -- check
     * Trivia Question and answer buttons are hidden or replaced with
-      * Nope! (Incorrect Answer Message)
-      * The Correct Answer was: 
-      * GIF or Image related to the correct answer
-    * After few seconds, automatically shows next trivia question and reset time remaining and run the timer.
+      * Nope! (Incorrect Answer Message) -- check
+      * The Correct Answer was: -- check
+      * Wrong! gif -- check
+    * After few seconds, automatically shows next trivia question and reset time remaining and run the timer. -- check
   
   * If the answer is correct
-    * Time remaining timer stops and is still displayed
+    * Time remaining timer stops and is still displayed -- check
     *  Trivia Question and answer buttons are hidden or replaced with
-      * Correct!
-      * GIF or image related to the correct answer
+      * Correct! -- check
+      * GIF or image related to the correct answer -- check
   
   * If the answer is not selected and timer runs out
     * Time Remaining stops at 0, it is displayed. -- check
@@ -37,16 +37,16 @@
     * After few seconds, automatically shows the next trivia question and reset time remaining and run the timer again. -- check
 
 # Aftrer last question
-  * Timer is still displayed. ( I believe it does not really matter if it is being displayed or not.)
-  * All done, here's how you did! (ending message) is displayed
-  * The counter with following features are displayed
+  * Remove timer -- check
+  * All done, here's how you did! (ending message) is displayed -- check
+  * The counter with following features are displayed -- check
     * Correct answers:
     * Incorrect answers:
     * Unanswered: 
   * Start Over? button is displayed -- Check
 
 # When Start Over button is clicked
-  * It basically resets and start the game again (Probably will have same or similar functionality with START button)
+  * It basically resets and start the game again (Probably will have same or similar functionality with START button) -- check
   
 
 */
@@ -73,10 +73,10 @@ var trivia = {
 
   // questions, answer options, and correct answers
   questions: {
-    q1: "Which company publishes 'World of Warcraft'?",
-    q2: "What year was 'World of Warcraft' released?",
-    q3: "What was the first expansion added to 'World of Warcraft'?",
-    q4: "How many copies of the 'Wrath of the Lich King' expansion sold on the first day?",
+    q1: 'Which company publishes "World of Warcraft"?',
+    q2: 'What year was "World of Warcraft" released?',
+    q3: 'What was the first expansion added to "World of Warcraft"?',
+    q4: 'How many copies of the "Wrath of the Lich King" expansion sold on the first day?',
 
   },
 
@@ -102,8 +102,14 @@ var trivia = {
     q2: '"assets/images/what_year_is_it.gif"',
     q3: '"assets/images/illidan.gif"',
     q4: '"assets/images/lich_king.gif"',
-  }
-  // wrongGifs
+  },
+
+  // wrongGifs doesn't have to match the question, pick random within the array.
+  wrongGifs: ['<img src="assets/images/wrong_trump.gif" class="result_gif">', '<img src="assets/images/wrong_2.gif" class="result_gif">', '<img src="assets/images/wrong_3.gif" class="result_gif">', '<img src="assets/images/wrong_4.gif" class="result_gif">'],
+
+  // timesupGifs
+  timesUpGifs: ['<img src="assets/images/times_up.gif" class="result_gif">', '<img src="assets/images/times_up_2.gif" class="result_gif">', '<img src="assets/images/times_up_3.gif" class="result_gif">', '<img src="assets/images/times_up_4.gif" class="result_gif">'],
+
 }
 
 // function to initialize game
@@ -179,6 +185,8 @@ function timerStart() {
 
   // if timer reaches 0, 
   else if (trivia.timer === -1) {
+    // random number between 0 to trivia.timesUpGifs array's length -1
+    var random = Math.floor(Math.random() * (trivia.timesUpGifs).length);
     // increment unanswered counter
     trivia.unanswered++;
     // stop question timer
@@ -189,7 +197,8 @@ function timerStart() {
     $(".answerBtn").remove();
     $(".results").append('<h3 class="times_up">' + "Time's Up!" + '</h3>');
     $(".question").append('<p class="answer">' + 'The Answer Was: ' + Object.values(trivia.answers)[trivia.currentSet] + '</p>');
-    $(".gif").append('<img src="assets/images/times_up.gif" class="result_gif">')
+    // random timesUp gif
+    $(".gif").append(trivia.timesUpGifs[random]);
 
   }
 
@@ -199,7 +208,8 @@ function timerStart() {
     $(".results")
       .html("<h3>All done, here's how you did!</h3>" + 
       '<p>Total correct answers: ' + trivia.correct + '</p>' +
-      '<p>Total inccorect answers: ' + trivia.incorrect + '</p>' + '<p>Total unasnwered questions: ' + trivia.unanswered + '</p>');
+      '<p>Total inccorect answers: ' + trivia.incorrect + '</p>' +
+      '<p>Total unasnwered questions: ' + trivia.unanswered + '</p>');
 
     // hide previous game info and show restart button
     $(".timer").hide();
@@ -230,10 +240,15 @@ function removeResult() {
 }
 
 function guessChecker() {
+  // the answer to the current question being asked
+  var currentAnswer = Object.values(trivia.answers)[trivia.currentSet]
+  // random number between 0 to trivia.wrongGifs array's length -1
+  var random = Math.floor(Math.random() * (trivia.wrongGifs).length);
+
   // if the button clicked is equal to the answer of the currentSet, show correct message and gif and run removeResult after 3 sec (setTimeout) to move to next question.
-  if ($(this).text() === Object.values(trivia.answers)[trivia.currentSet]) {
-    console.log(this);
-     // increment correct counter
+  if ($(this).text() === currentAnswer) {
+    
+    // increment correct counter
     trivia.correct++;
     // stop question timer
     clearInterval(trivia.timerId);
@@ -242,8 +257,20 @@ function guessChecker() {
 
     $(".answerBtn").remove();
     $(".results").append('<h3 class="correct">' + "Correct Answer!" + '</h3>');
-    $(".question").append('<p class="answer">' + 'The Answer Was: ' + Object.values(trivia.answers)[trivia.currentSet] + '</p>');
+    $(".question").append('<p class="answer">' + 'The Answer Was: ' + currentAnswer + '</p>');
     $(".gif").append('<img src='+Object.values(trivia.correctGifs)[trivia.currentSet] +' class="result_gif">')
+  } else {
+    trivia.incorrect++;
+    // stop question timer
+    clearInterval(trivia.timerId);
+    //run removeResult for 3 sec to the result info
+    resultId = setTimeout(removeResult, 5000);
+
+    $(".answerBtn").remove();
+    $(".results").append('<h3 class="incorrect">' + "Wrong Answer!" + '</h3>');
+    $(".question").append('<p class="answer">' + 'The Answer Was: ' + currentAnswer + '</p>');
+    // random wrong gif
+    $(".gif").append(trivia.wrongGifs[random]);
   }
 }
 
