@@ -174,8 +174,8 @@ function timerStart() {
     //run showResult for 5 sec to hide buttons
     resultId = setTimeout(showResult, 3000);
 
-    $(".button-group").remove();
-    $(".results").text("Time's Up!");
+    $(".answerBtn").remove();
+    $(".results").append('<h3 class="times_up">' + "Time's Up!" + '</h3>');
     $(".question").append('<p class="answer">' + 'The Answer Was: ' + Object.values(trivia.answers)[trivia.currentSet] + '</p>');
     $(".gif").append('<img src="assets/images/times_up.gif" class="result_gif">')
 
@@ -185,11 +185,12 @@ function timerStart() {
   else if (trivia.currentSet === Object.keys(trivia.questions).length) {
     // show the final result score
     $(".results")
-      .text("<h3>All done, here's how you did!</h3>" + 
+      .html("<h3>All done, here's how you did!</h3>" + 
       '<p>Total correct answers: ' + trivia.correct + '</p>' +
       '<p>Total inccorect answers: ' + trivia.incorrect + '</p>' + '<p>Total unasnwered questions: ' + trivia.unanswered + '</p>');
 
     // hide previous game info and show restart button
+    $(".timer").hide();
     $(".question").hide();
     $(".gif").hide();
     $(".button-group").hide();
