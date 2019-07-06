@@ -10,7 +10,7 @@
 # When the Start button is clicked
   * Hide or Replace Start button with 
     * Time Remaining: -- Seconds  -- Check
-    * Trivia Question
+    * Trivia Question displayed -- Check
     * 4 answer buttons  --- Check
 
 # When one of the answer buttons are clicked
@@ -29,12 +29,12 @@
       * GIF or image related to the correct answer
   
   * If the answer is not selected and timer runs out
-    * Time Remaining stops at 0, it is displayed.
+    * Time Remaining stops at 0, it is displayed. -- check
     * Trivia Question and answer buttons are hidden or replaced with
-      * Out of Time! (Time's up message)
-      * Display correct answer
-      * GIF or image related to the correct answer
-    * After few seconds, automatically shows the next trivia question and reset time remaining and run the timer.
+      * Out of Time! (Time's up message) -- check
+      * Display correct answer -- check
+      * Times up GIF -- check
+    * After few seconds, automatically shows the next trivia question and reset time remaining and run the timer again. -- check
 
 # Aftrer last question
   * Timer is still displayed. ( I believe it does not really matter if it is being displayed or not.)
@@ -43,7 +43,7 @@
     * Correct answers:
     * Incorrect answers:
     * Unanswered: 
-  * Start Over? button is displayed
+  * Start Over? button is displayed -- Check
 
 # When Start Over button is clicked
   * It basically resets and start the game again (Probably will have same or similar functionality with START button)
@@ -96,6 +96,8 @@ var trivia = {
 
   },
 
+  // correctGifs
+  // wrongGifs
 }
 
 // function to initialize game
@@ -147,7 +149,7 @@ function nextQuestion() {
   // creates all the trivia guess options in the html (appending it to button-group)
   $.each(answerOptions, function(index, key) {
 
-    $(".button-group").append($('<button type="button" class ="btn btn-outline-success answerBtn">'+ key +'</button>'))
+    $(".button-group").append($('<button type="button" class ="answerBtn btn btn-outline-success">'+ key +'</button>'))
 
   })
 
@@ -170,12 +172,12 @@ function timerStart() {
     // stop question timer
     clearInterval(trivia.timerId);
     //run showResult for 5 sec to hide buttons
-    resultId = setTimeout(showResult, 1000);
+    resultId = setTimeout(showResult, 3000);
 
     $(".button-group").remove();
     $(".results").text("Time's Up!");
     $(".question").append('<p class="answer">' + 'The Answer Was: ' + Object.values(trivia.answers)[trivia.currentSet] + '</p>');
-    $(".gif").append('<img src="../images/wrong_trump.gif" class="result_gif">')
+    $(".gif").append('<img src="assets/images/times_up.gif" class="result_gif">')
 
   }
 
@@ -191,6 +193,7 @@ function timerStart() {
     $(".question").hide();
     $(".gif").hide();
     $(".button-group").hide();
+    // to restart the game. When it's clicekd, the timer starts again but the question and answeroption buttons aren't.
     $(".restart-button").show();
   }
 }
@@ -198,200 +201,18 @@ function timerStart() {
 function showResult() {
 
   // increase currentSet
-  // remove previous question
+  trivia.currentSet++
+  // remove previous result
+  $(".results").text("");
   // remove previous answeroption
+  $(".answerBtn").remove();
+
+  // remove previous gifs
+  $(".result_gif").remove();
   // run nextQuestion
+  nextQuestion();
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// For when the start button is clicked.
-// function startGame() {
-  
-//   // Reset counters
-//   correctCounter = 0;
-//   incorrectCounter = 0;
-//   unansweredCounter = 0;
- 
-//   // Hide start button and show game-contents
-//   $(".start-button").hide();
-//   $(".game-contents").show();
-  
-//   startTimer();
-
-//   // Display Question
-//   nextQuestion(); // this is first question when the start button is clicked, how do we move to result and to second question?
-  
-// }
-
-// // For Timer
-// function startTimer() {
-
-//   clearInterval(intervalId);
-//   intervalId = setInterval(decrement, 1000);
-// } 
-
-// function decrement() {
-
-//   timer--;
-
-//   $(".timer").html("<h3 class='timer'>" + "Time Remaining: " + timer + " Seconds" + "</h3>");
-
-//   if (timer === 0) {
-
-//     stopTimer();
-
-//     // display times up
-//     timeup();
-//   }
-// }
-
-// function stopTimer() {
-//   clearInterval(intervalId);
-// }
-
-// // for questions
-// var answerBtn = $(".answerBtn");
-
-// var myQuestions = [
-  
-//   {
-//     question: "What is 1+1?",
-//     answers: ["3", "0", "1", "2"],    
-//     correct: function() {
-//       return this.answers[3]
-//     }
-//   },
-//   {
-//     question: "What is 2 x 2?",
-//     answers: ["4", "2", "22", "0"],
-//     correct: function() {
-//       return this.answers[0]
-//     }
-//   },
-//   {
-//     question: "Hyper Text Markup Language is also known as___",
-//     answers: ["CSS", "JavaScript", "HTML", "jQuery"],
-//     correct: function() {
-//       return this.answers[2]
-//     }
-//   },
-//   {
-//     question: "What is Walmart's highest selling product of all time?",
-//     answers: ["Bottled Water", "Coke", "Toilet Paper", "Bananas"],
-//     correct: function() {
-//       return this.answers[3]
-//     }
-//   },
-
-// ];
-//   var questionOption = Object.value(myQuestions.question)[0];
-//   $('#question').text(questionOption);
-//   console.log(questionOption);
-
-
-// console.log(myQuestions[0])
-// console.log(myQuestions[0].question) // What is 1+1?
-// console.log(myQuestions[0].correct())
-// console.log(myQuestions[1].correct())
-
-/*
-1. loop through the my Questions obj.
-2. push the questions to questionArry.
-3. Display questions in order when the start button is clicked and after result 
-4. Display answers of the question inside answerbuttons
-5. When the answerBtns are clicked, show result for 5 seconds
-  1. if answerBtn clicked === correctAnswer, show correct messege.
-  2. if answerBtn clicked !=== correctAnswer, show incorrect message.
-  3. if timeout, show timeout message
-6. After 5 seconds of the result, show next question and the answers of the question
-
-*/
-
-// var correctAnswer = [myQuestions[0].correct(), myQuestions[1].correct(), myQuestions[2].correct(), myQuestions[3].correct()]  
-
-
-// If this is added to startGame function, which is triggered when start button is clicked, it should display next(first) question.
-// If this is added after result function then it should display next question after result.
-// Have result with timer and when timer === 0, trigger nextQuestion.
-// Result fucntion triggered when user click answerBtn.
-
-
-
-// var questionArry = [];
-
-//   for (var i = 0; i < myQuestions.length; i++) {
-//     questionArry.push(myQuestions[i].question);
-//   }
-
-
-
-  
-  
-//   console.log(questionArry);
-  
-// function questionLists() {
-  
-
-//   // if($(".start-button").on("click", ))
-// }
-
-
-// function nextQuestion() {
-//   $(".question").text(questionArry[i].question);
-// }
-
-
-
-// $("#a").text(myQuestions[0].answers[0])  // myquestion[0] -> myQuestion[1] after result page.. HOW??
-// $("#b").text(myQuestions[0].answers[1])
-// $("#c").text(myQuestions[0].answers[2])
-// $("#d").text(myQuestions[0].answers[3])
-
-// // alert($('.answerBtn').on("click", text()))
-
-// var results = $(".results")
-// var showResults;
-
-
-// // Use timer to show this until timer === 0 , set the timer for 5 sec
-// showResults = function() {
-
-//   // if correct, display correct message and gif
-//   if (buttonClicked === myQuestions[i].correct)
-//   results.text("Correct")
-//   results.text("Correct Answer Was: " + questions.answer)
-//   // else incorrect, display incorrect message and gif
-//   // After 5 seconds, display nextQuestion
-// }
-
-
-
 
 
 
