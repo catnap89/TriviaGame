@@ -171,8 +171,8 @@ function timerStart() {
     trivia.unanswered++;
     // stop question timer
     clearInterval(trivia.timerId);
-    //run showResult for 5 sec to hide buttons
-    resultId = setTimeout(showResult, 3000);
+    //run removeResult for 3 sec to hide buttons
+    resultId = setTimeout(removeResult, 3000);
 
     $(".answerBtn").remove();
     $(".results").append('<h3 class="times_up">' + "Time's Up!" + '</h3>');
@@ -199,14 +199,16 @@ function timerStart() {
   }
 }
 
-function showResult() {
+// removeResult is to trigger nextQuestion function after 3 sec with incremented trivia.currentSet so it can display next question and answerOptions.
+// removeResult function is executed 3 seconds after timer runs out or if user clicked answerBtn to clean up the unncessary previous game info before next question.
+function removeResult() {
 
   // increase currentSet
   trivia.currentSet++
   // remove previous result
   $(".results").text("");
-  // remove previous answeroption
-  $(".answerBtn").remove();
+  // remove previous answeroption -- does not need it here since the answerBtn should be removed when the timer reaches 0
+  // $(".answerBtn").remove();
 
   // remove previous gifs
   $(".result_gif").remove();
