@@ -115,7 +115,13 @@ function startGame() {
   // hide start button and show game-contents
   $(".start-button").hide();
   $(".restart-button").hide();
+  // show game features
   $(".game-contents").show();
+  $(".timer").show();
+  $(".question").show();
+  $(".gif").show();
+  $(".button-group").show();
+
   // empty last result (the final score)
   $(".results").text("");
 
