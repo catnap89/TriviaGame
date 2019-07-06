@@ -97,6 +97,12 @@ var trivia = {
   },
 
   // correctGifs
+  correctGifs: {
+    q1: '"assets/images/blizzard_entertainment.gif"',
+    q2: '"assets/images/what_year_is_it.gif"',
+    q3: '"assets/images/illidan.gif"',
+    q4: '"assets/images/lich_king.gif"',
+  }
   // wrongGifs
 }
 
@@ -132,7 +138,7 @@ function startGame() {
 
 function nextQuestion() {
 
-  // set timer to 20 sec
+  // set timer to 10 sec
   trivia.timer = 10;
   // this method below quickly reset the timer back to 20 and show it. Without it, if previous question was answered at 15 sec, user will see 15 sec in timer briefly before it resets back to 20 sec.
   $(".timer").text("Time Remaining: " + trivia.timer + " Seconds")
@@ -177,8 +183,8 @@ function timerStart() {
     trivia.unanswered++;
     // stop question timer
     clearInterval(trivia.timerId);
-    //run removeResult for 3 sec to hide buttons
-    resultId = setTimeout(removeResult, 3000);
+    //run removeResult for 3 sec to hide result info
+    resultId = setTimeout(removeResult, 5000);
 
     $(".answerBtn").remove();
     $(".results").append('<h3 class="times_up">' + "Time's Up!" + '</h3>');
@@ -221,6 +227,24 @@ function removeResult() {
   // run nextQuestion
   nextQuestion();
 
+}
+
+function guessChecker() {
+  // if the button clicked is equal to the answer of the currentSet, show correct message and gif and run removeResult after 3 sec (setTimeout) to move to next question.
+  if ($(this).text() === Object.values(trivia.answers)[trivia.currentSet]) {
+    console.log(this);
+     // increment correct counter
+    trivia.correct++;
+    // stop question timer
+    clearInterval(trivia.timerId);
+    //run removeResult for 3 sec to the result info
+    resultId = setTimeout(removeResult, 5000);
+
+    $(".answerBtn").remove();
+    $(".results").append('<h3 class="correct">' + "Correct Answer!" + '</h3>');
+    $(".question").append('<p class="answer">' + 'The Answer Was: ' + Object.values(trivia.answers)[trivia.currentSet] + '</p>');
+    $(".gif").append('<img src='+Object.values(trivia.correctGifs)[trivia.currentSet] +' class="result_gif">')
+  }
 }
 
 
