@@ -32,12 +32,22 @@ body {
   /* margin-top: 200px; */
 }
 
+/* increase the contents container's height when gif's added. or even buttons. In a small screen, this causes problem */
 .game-contents {
   text-align: center;
+  /* height: 100%; */
   border: 1px solid teal;
   display: none;
+}
+.row-contents {
+  /* height: 100%; */
 }
 
 .timer {
   color: teal;
+}
+
+.result_gif {
+  width: 400px;
+  height: 200px;
 }
