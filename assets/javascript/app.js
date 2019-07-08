@@ -57,6 +57,7 @@ $(document).ready(function() {
   // event listeners
   $(".start-button").on("click", startGame);  // Clicking START button triggers startGame function
   $(".restart-button").on("click", startGame);
+  // for the dynamically created buttons
   $(document).on('click' , '.answerBtn', guessChecker);
 
 })
