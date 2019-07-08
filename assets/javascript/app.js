@@ -123,7 +123,7 @@ function startGame() {
   // Don't think I need to have timer here, since nextQuestion will display timer. -- WRONG. Whenever user click start button to restart the game after first game, the counter speeds up without clearInterval.
   clearInterval(trivia.timerId);
   // show timer
-  $(".timer").text("Time Remaining: " + trivia.timer + " Seconds")
+  $(".timer").html("Time Remaining: " + '<span class="timer-number">' + trivia.timer + '</span>'+ " Seconds")
 
   // hide start button and show game-contents
   $(".start-button").hide();
@@ -137,6 +137,8 @@ function startGame() {
 
   // empty last result (the final score)
   $(".results").text("");
+  $(".final-score").text("");
+  
 
   // ask first question
   nextQuestion();
@@ -148,7 +150,7 @@ function nextQuestion() {
   // set timer to 10 sec
   trivia.timer = 10;
   // this method below quickly reset the timer back to 20 and show it. Without it, if previous question was answered at 15 sec, user will see 15 sec in timer briefly before it resets back to 20 sec.
-  $(".timer").text("Time Remaining: " + trivia.timer + " Seconds")
+  $(".timer").html("Time Remaining: " + '<span class="timer-number">' + trivia.timer + '</span>'+ " Seconds")
 
   // to prevent timer from speeding up
   // run timerStart
@@ -168,7 +170,7 @@ function nextQuestion() {
   // creates all the trivia guess options in the html (appending it to button-group)
   $.each(answerOptions, function(index, key) {
 
-    $(".button-group").append($('<button type="button" class ="answerBtn btn btn-outline-success">'+ key +'</button>'))
+    $(".button-group").append($('<button type="button" class ="answerBtn btn btn-success">'+ key +'</button>'))
 
   })
 
@@ -180,7 +182,7 @@ function timerStart() {
   // if timer still has time left and if there are still questions left to ask
   // trivia.currentSet start from 0 so on the last question currentSet will be 1 less than Object.keys(trivia.questions).length.
   if (trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length) {
-    $(".timer").text("Time Remaining: " + trivia.timer + " Seconds")
+    $(".timer").html("Time Remaining: " + '<span class="timer-number">' + trivia.timer + '</span>' + " Seconds")
     trivia.timer--;
   }
 
@@ -197,7 +199,7 @@ function timerStart() {
 
     $(".answerBtn").remove();
     $(".results").append('<h3 class="times_up">' + "Time's Up!" + '</h3>');
-    $(".question").append('<p class="answer">' + 'The Answer Was: ' + Object.values(trivia.answers)[trivia.currentSet] + '</p>');
+    $(".results").append('<p class="answer">' + 'The Answer Was: ' + Object.values(trivia.answers)[trivia.currentSet] + '</p>');
     // random timesUp gif
     $(".gif").append(trivia.timesUpGifs[random]);
 
@@ -206,11 +208,11 @@ function timerStart() {
   // if there are no more questions left to ask
   else if (trivia.currentSet === Object.keys(trivia.questions).length) {
     // show the final result score
-    $(".results")
+    $(".final-score")
       .html("<h3>All done, here's how you did!</h3>" + 
-      '<p>Total correct answers: ' + trivia.correct + '</p>' +
-      '<p>Total inccorect answers: ' + trivia.incorrect + '</p>' +
-      '<p>Total unasnwered questions: ' + trivia.unanswered + '</p>');
+      '<p class="result_score">Total correct answers: ' + trivia.correct + '</p>' +
+      '<p class="result_score">Total inccorect answers: ' + trivia.incorrect + '</p>' +
+      '<p class="result_score">Total unasnwered questions: ' + trivia.unanswered + '</p>');
 
     // hide previous game info and show restart button
     $(".timer").hide();
@@ -258,7 +260,7 @@ function guessChecker() {
 
     $(".answerBtn").remove();
     $(".results").append('<h3 class="correct">' + "Correct Answer!" + '</h3>');
-    $(".question").append('<p class="answer">' + 'The Answer Was: ' + currentAnswer + '</p>');
+    $(".results").append('<p class="answer">' + 'The Answer Was: ' + currentAnswer + '</p>');
     $(".gif").append('<img src='+Object.values(trivia.correctGifs)[trivia.currentSet] +' class="result_gif">')
   } else {
     trivia.incorrect++;
@@ -269,7 +271,7 @@ function guessChecker() {
 
     $(".answerBtn").remove();
     $(".results").append('<h3 class="incorrect">' + "Wrong Answer!" + '</h3>');
-    $(".question").append('<p class="answer">' + 'The Answer Was: ' + currentAnswer + '</p>');
+    $(".results").append('<p class="answer">' + 'The Answer Was: ' + currentAnswer + '</p>');
     // random wrong gif
     $(".gif").append(trivia.wrongGifs[random]);
   }
