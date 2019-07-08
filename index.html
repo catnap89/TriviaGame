@@ -17,6 +17,10 @@
 </head>
 
 <body>
+  <!-- The video background-->
+  <video autoplay muted loop id="wow_mov_bg">
+    <source src="assets/images/wow_mov_1.mp4" type="video/mp4">
+  </video>
 
   <div class="container-fluid">
 		
@@ -46,7 +50,7 @@
 		
 			<div class="col-md-8 offset-md-2 col-8-contents">
 				
-        <!-- 2 Sub rows with one column -->
+        <!-- title -->
         <div class="row">
           <div class="col-md-12">
               <h1 class="display-1 title">
@@ -54,29 +58,34 @@
               </h1>
           </div>
         </div>  <!--row-->
-
+        <!-- start button -->
         <div class="row">
-          <div class="col-md-8 offset-2 button-container">
+          <div class="col-md-6 offset-md-3 button-container">
             <button type="button" class="btn btn-primary btn-lg btn-block start-button">START</button>
           </div>
         </div>  <!-- row end -->
 
         <div class="row row-contents">
-          <div class="col-md-8 offset-2 game-contents">
+          <div class="col-md-8 offset-md-2 game-contents">
+            <!-- timer will be displayed here -->
             <h3 class="timer">
               
             </h3>
+            <!-- result comments and score will be displayed here -->
             <div class="results">
 
             </div>
             <div class="question-container">
+              <!-- trivia questions will be displayed here -->
               <h3 class="question">
 
               </h3>
             </div>
+            <!-- result gifs will be displayed here -->
             <div class="gif">
 
             </div>
+            <!-- answer option buttons will be displayed here -->
             <div class="btn-group-vertical button-group">
               
             </div>
