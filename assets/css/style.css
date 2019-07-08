@@ -1,163 +1,103 @@
 
 html {
-    height: 100%; 
+  height: 100%; 
 }
 
 body {
-    height: 100%;
+  height: 100%;
 }
 
+/* Style the video: 100% width and height to cover the entire window */
+#wow_mov_bg {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+
+
+
 .container-fluid {
-    height: 100%;
-    background-image: url("../images/wow_wallpaper.jpg");
-    background-size: cover;
-    overflow: auto;
+  height: 100%;
+  /* background-image: url("../images/wow_wallpaper.jpg"); */
+  background-size: cover;
+  overflow: auto;
 }
 
 /* Navbar */
 .navbar {
-    padding: 0;
-    justify-content: space-between;
-    color: #fff; /* This changed the font color of navbar-brand... */
-    border-bottom: 2px solid #ddd;
-    /* Modifying height messes up with toggler */
-    /* height: 90px;  */  
+  padding: 0;
+  justify-content: space-between;
+  color: #fff; /* This changed the font color of navbar-brand... */
+  border-bottom: 2px solid #ddd;
+  /* Modifying height messes up with toggler */
+  /* height: 90px;  */  
 }
 
 #navbarTogglerDemo02 {
-    flex-grow: 0;
+  flex-grow: 0;
 }
 
 .navbar-brand {
-    background-color: #4aaaa5;
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-top: 15px;
-    height: 84px;
-    font-size: 30px;
+  background-color: #4aaaa5;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 15px;
+  height: 84px;
+  font-size: 30px;
 }
 
 
 .collapse {
-    padding: 10px;  
+  padding: 10px;  
 }
 
 .navbar-toggler {
-    width: 70px;
-    height: 70px;
-    margin-right: 10px;
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
 }
 
 .navbar-nav {
-    padding: 10px; 
+  padding: 10px; 
 }
 
 
 /* Content */
 .col-8-contents {
-    background-color: grey;
-    margin-top: 120px;
-    margin-bottom: 90px;
-    padding: 20px;
-    overflow: auto;
-    border: 1px solid #ddd;
-}
+  height: 600px;
+  background-image: url("../images/brown_background_1.jpg");
+  margin-top: 120px;
+  margin-bottom: 100px;
+  padding: 20px;
+  /* overflow: auto; */
+  border: 1px solid #ddd;
+} 
 
 .title {
-    border-bottom: 3px solid #dddddd;
-    padding-bottom: 10px;
-    color: #4aaaa5;
-    text-align: center;
+  border-bottom: 3px solid #dddddd;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  color: yellow;
+  text-align: center;
+  font-family: Papyrus, fantasy, sans-serif;
+  font-size: 48px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 700;     
 }
 
-
-/* About me */
-.profilepic {
-
-    width: 200px;
-    height: auto;
+.game-contents {
+  text-align: center;
+  display: none;
+  margin-bottom: 100px;
 }
 
-/* Portfolio */
-.portfolio {
-    width: 274px;
-    overflow: auto;
-    position: relative;
-    float: left;
-    margin: 25px;
-    
-}
-
-.portfolioImage {
-    width: 274px;
-    height: 200px;
-    border: 0 none;
-
-   
-
-}
-
-.portfolio h3 {
-    border-bottom: 0;
-    background: #4aaaa5; /* What is the difference between background and background-color? */
-    color: #fff;
-    text-align: center;
-    position: absolute;
-    bottom: 20px;
-    padding: 15px;
-    width: 100%;
-    line-height: 30px;
-    margin-bottom: 0; /* Does this even change anything? */
-    font-weight: 300;
-
-
-}
-
-/* Contact */
-
-#contact-form ul {
-    margin-bottom: 20px;
-    list-style-type: none;
-    padding: 0;
-    
-}
-
-#contact-form li {
-    margin-bottom: 10px;
-}
-
-label,
-input[type=text],
-input[type=email],
-textarea {
-    display: block;
-    width: 100%;
-}
-
-input[type=text],
-input[type=email],
-textarea {
-    height: 35px;
-    border: 1px solid #ddd;
-    padding: 0 10px;
-    font-size: 14px;
-
-
-}
-
-textarea {
-    height: 200px;
-}
-
-input[type=submit] {
-    background: #4aaaa5;
-    border: 0 none;
-    color: #fff;
-    font-size: 18px;
-    padding: 10px 40px;
-    cursor: pointer;
-
-
+.first-container {
+  height: 100px;
 }
 
 /* Footer */
@@ -171,112 +111,106 @@ input[type=submit] {
     color: #fff;
 }
 
+/* buttons */
+button {
+  font-family: Papyrus, fantasy, sans-serif;
+}
+
+.start-button {
+  margin-top: 200px;
+  margin-bottom: 200px;
+}
+
+.restart-button {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button-group {
+  margin-top: 50px;
+}
+
+/* texts & number styling */
+h3 { 
+  font-family: Papyrus, fantasy, sans-serif;
+  font-size: 24px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 700; 
+  color: yellow;
+}
+
+.timer-number {
+  color: teal;
+}
+
+.answer {
+  font-family: Papyrus, fantasy, sans-serif;
+  font-size: 24px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 700;
+  color: white;
+}
+
+.correct {
+  font-family: Papyrus, fantasy, sans-serif;
+  font-size: 24px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 700;
+  color: greenyellow;
+}
+
+.incorrect {
+  font-family: Papyrus, fantasy, sans-serif;
+  font-size: 24px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 700;
+  color: red;
+}
+
+.times_up {
+  font-family: Papyrus, fantasy, sans-serif;
+  font-size: 24px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 700;
+  color: aqua;
+}
+
+.result_score {
+  color: white;
+}
+
+
+
+/* gif */
+.result_gif {
+  width: 400px;
+  height: 200px;
+}
+
 /* @media query*/
-
-
-/* PortfolioImage */
+/* result_gif */
 @media only screen and (max-width: 980px) {
-    .portfolioImage {
-        width: 100%;
-        
-    }
-    
-    .portfolio h3 {
-        width: 100%;
-        height: auto;
+    .result_gif {
+        width: 100%;     
     }
 }
 
 @media only screen and (max-width: 768px) {
-    .portfolioImage {
+    .result_gif {
         width: 246px;
-        height: 180px;
-        
-    }
-    
-    .portfolio h3 {
-        width: 246px;
-        height: auto;
-        font-size: 90%;
+        height: 123px;
     }
 }
 
 @media only screen and (max-width: 640px) {
-    .portfolioImage {
-        width: 219px;
-        height: 160px;
-        
+    .result_gif {
+        width: 220px;
+        height: 110px;
     }
-    
-    .portfolio h3 {
-        width: 219px;
-        height: auto;
-        font-size: 80%;
-    }
-}
-
-
-
-
-
-
-/* html {
-  height: 100%;
-} */
-
-/* body {
-  background-color: yellow;
-  height: 100%;
-} */
-
-/* .container {
-  background-color: grey;
-  height: 80vh;
-  margin-top: 50px;
-  margin-bottom: 20px;
-} */
-
-/* .row {
-  margin-top: 50px;
-  border: 1px solid red;
-} */
-
-/* .col-md-12 {
-  border: 1px solid blue;
-
-} */
-
-/* .title {
-  border: 1px solid green;
-  text-align: center;
-} */
-
-/* .button-container {
-  height: 100%;
-  background-color: white;
-} */
-
-/* .start-button {
-  /* margin-top: 200px; */
-} */
-
-/* increase the contents container's height when gif's added. or even buttons. In a small screen, this causes problem */
-/* .game-contents {
-  text-align: center;
-  
-  border: 1px solid teal;
-  display: none;
-} */
-
-/* .row-contents {
-  
-} */
-
-/* .timer {
-  color: teal;
-} */
-
-.result_gif {
-  width: 400px;
-  height: 200px;
 }
