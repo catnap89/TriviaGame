@@ -161,11 +161,9 @@ function nextQuestion() {
   // gets all the questions then indexes current question
   var questionLists = Object.values(trivia.questions)[trivia.currentSet];
   $(".question").text(questionLists);
-  console.log(questionLists);
 
   // an array of all the user options for the current question
   var answerOptions = Object.values(trivia.options)[trivia.currentSet];
-  console.log(answerOptions);
 
   // creates all the trivia guess options in the html (appending it to button-group)
   $.each(answerOptions, function(index, key) {
